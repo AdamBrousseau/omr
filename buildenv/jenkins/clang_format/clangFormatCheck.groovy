@@ -24,15 +24,16 @@
     timeout(time: 8, unit: 'HOURS') {
         stage('Queue') {
             node('Linux && x86') {
+                currentBuild.description = "<a href=${JENKINS_URL}computer/${NODE_NAME}>${NODE_NAME}</a>"
                 try {
                     checkout scm
-                    dir('buildenv/jenkins/clang_format') {
-                        stage('Docker Build') {
+                    stage('Docker Build') {
+                        dir('buildenv/jenkins/clang_format') {
                             sh "docker build -t clang-format -f Dockerfile ."
                         }
-                        stage('Format Check') {
-                            sh "./clangFormatCheck.sh"
-                        }
+                    }
+                    stage('Format Check') {
+                        sh "buildenv/jenkins/clang_format/clangFormatCheck.sh"
                     }
                 } finally {
                     cleanWs()
