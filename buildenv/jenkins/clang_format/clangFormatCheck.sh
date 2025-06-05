@@ -22,8 +22,6 @@
 ###############################################################################
 
 allFiles=`git diff -C --diff-filter=ACM --name-only origin/master HEAD --`
-echo "ghprbTargetBranch:$ghprbTargetBranch"
-allFiles=`git diff -C --diff-filter=ACM --name-only origin/${ghprbTargetBranch} HEAD`
 if [ x"$allFiles" = x ] ; then
     echo "There are no files to check for code formatting."
 else
