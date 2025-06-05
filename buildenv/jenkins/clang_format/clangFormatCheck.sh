@@ -25,8 +25,10 @@ allFiles=`git diff -C --diff-filter=ACM --name-only origin/master HEAD --`
 if [ x"$allFiles" = x ] ; then
     echo "There are no files to check for code formatting."
 else
+    echo "$allFiles"
     badFiles=
     for file in $allFiles ; do
+        echo "$file"
         if [[ $file == compiler/*.c ]] || [[ $file == compiler/*.cpp ]] || [[ $file == compiler/*.h ]] || [[ $file == compiler/*.hpp ]] ; then
             docker run --rm -v $WORKSPACE:/src clang-format:latest clang-format -style=file:compiler/.clang-format /src/$file > $file.copy
             if [ "$(diff $file $file.copy)" != "" ] ; then
