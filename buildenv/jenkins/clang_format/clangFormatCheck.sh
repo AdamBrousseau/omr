@@ -27,8 +27,8 @@ if [ x"$allFiles" = x ] ; then
 else
     badFiles=
     for file in $allFiles ; do
-        if [[ $file == compiler/*.c ]] || [ $file == compiler/*.cpp ]] || [[ $file == compiler/*.h ]] || [[ $file == compiler/*.hpp ]] ; then
-            docker run --rm -v $PWD:/src clang-format:latest clang-format -style=file:<config file path in container> /src/$file > $file.copy
+        if [[ $file == compiler/*.c ]] || [[ $file == compiler/*.cpp ]] || [[ $file == compiler/*.h ]] || [[ $file == compiler/*.hpp ]] ; then
+            docker run --rm -v $WORKSPACE:/src clang-format:latest clang-format -style=file:compiler/.clang-format /src/$file > $file.copy
             if [ "$(diff $file $file.copy)" != "" ] ; then
                 echo "ERROR - clang-format should be a NOP: '$file'"
                 badFiles="$badFiles $file"
