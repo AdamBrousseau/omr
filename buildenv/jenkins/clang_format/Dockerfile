@@ -24,7 +24,7 @@ FROM registry.access.redhat.com/ubi8/ubi-minimal:latest
 
 RUN set -eux; \
     microdnf install -y \
-       wget tar xz ncurses-compat-libs \
+       wget tar xz \
     && microdnf update -y \
     && microdnf clean all; \
     cd /tmp; \
